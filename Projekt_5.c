@@ -1,53 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-typedef struct GladaGrisen{
-    char namn [50];
-    char utdelningsadress [30];
-    int postnummer;
-    char postadress [3];
-    char utkorning;
-}GladaGrisen;
-typedef struct levrantorer{
-        char namn [50];
-     char utdelningsadress [30];
-     int postnummer;
-     char postadress [3];
-     char utkorning;
-     char telefonnummer [];
-}levrantorer;
-int main(){
-    GladaGrisen gammal;
-    levrantorer nya;
-    
+void sortera(int vekt [],int storlek){
+    int i,j,slask;
 
-    FILE *pgam,*pny;
-
-    pgam = fopen ("LEV.DAT","rb");
-    if (pgam == NULL){
-        printf("kunde inte läsa filen");
-        return 1;
-    }
-    pny = fopen ("UT.DAT","wb");
-    if (pny == NULL){
-        printf("kunde inte skapa filen");
-        fclose(pgam);
-        return 1;
-    }
-
-    while (fread(&gammal,sizeof(GladaGrisen),1,pgam)){
-        if (gammal.utkorning == 'J'){
-            strcpy (nya.namn,gammal.namn);
-            strcpy (nya.postadress,gammal.postadress);
-            strcpy (nya.utdelningsadress,gammal.utdelningsadress);
-            strcpy (nya.utkorning,gammal.utkorning);
-            nya.postnummer=gammal.postnummer;
-            
-            fwrite (&nya,sizeof(levrantorer),1,pny);
+    for(i=0; i<storlek; i++){
+        for(j=storlek-1; j>i; j--){
+            if (vekt[j-1]>vekt[j]){
+                slask=vekt[j-1];
+                vekt[j-1]=vekt[j];
+                vekt[j]=slask;
+            }
         }
     }
-fclose(pgam);
-fclose(pny);
+}
+
+int main(){
+    int vekt[9]={2,1,5,3,4,8,6,7,9};
+    int i;
+
+    sortera(vekt,9);
+    for(i=0; i<9; i++){
+    printf("%i ", vekt[i]);
+    }
+    
    
 return 0;
 }

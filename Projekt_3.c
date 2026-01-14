@@ -1,40 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-typedef struct Fiskar{
-    char namn [30];
-    char familj [25];
-    int nummer;
-}Fiskar;
-typedef struct NyFisk{
-    char namn[30];
-    char familj [25];
-}NyFisk;
-int main(){
-    Fiskar in;
-    NyFisk ut;
-    FILE *fin,*fut;
+typedef struct vader {
+    int datum;    
+    int vind;
+    float temp;
+}vader; 
 
-    fin=fopen("FISKAR.DAT","rb");
-    if(fin==NULL){
-        printf("filen kunde inte läsas");
+int main() {
+    vader post;
+    FILE *fp;
+    vader varmast,kallast;
+    float max = -100.0;
+    float min = 100.0;
+    
+    fp = fopen("VADER24.DAT","rb");
+    if(fp==NULL){
+        printf("kunde inte läsa filen");
         return 1;
     }
-    fut=fopen("NYFISK.DAT","wb");
-    if(fut==NULL){
-        printf("filen kunde inte öppnas");
-        fclose(fin);
-        return 1;
-    }
-    while(fread(&in,sizeof(Fiskar),1,fin)){
-        if (in.nummer<500){
-            strcpy(ut.namn,in.namn);
-            strcpy(ut.familj,in.familj);
-            fwrite(&ut,sizeof(NyFisk),1,fut);
+    while(fread(&post,sizeof(vader),1,fp)){
+        if(post.datum >= 240401 && post.datum <= 240430){
+            if (post.temp>max){
+                max = post.temp;
+                varmast = post;
+
+            }
+            if (post.temp<min){
+                min=post.temp;
+                kallast=post;
+            }
+           
         }
-        
     }
-fclose(fin);
-fclose(fut);
+            printf("kallast\ndag: %i\ntemp: %f\nvind: %i\n",kallast.datum,kallast.temp,kallast.vind);
+            printf("varmast\ndag: %i\ntemp: %f\nvind: %i",varmast.datum,varmast.temp,varmast.vind);
+            fclose(fp);
+    
     return 0;
 }
+

@@ -1,47 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-typedef struct studenter{
-    char namn [15];
-    char personnummer [13];
-    char telefonnummer [10];
-    int workshops;
-}studenter;
-typedef struct godkanda{
-    char namn [15];
-    char personnummer [13];
-    char telefonnummer [10];
-
-}godkanda;
-
+int sortera (int vekt[],int soktal,int storlek){
+    int v=0;
+    int mitt;
+    int h=storlek;
+    
+    
+    while((h-v)>1){
+        mitt=(v+h)/2;
+        
+        if (soktal>=vekt[mitt])
+          v=mitt;
+    
+        else 
+          h=mitt;
+       }
+    if(soktal==vekt[v])
+        return v;
+    
+    else
+    printf("talet finns inte");
+    return -1001;
+    }
 int main(){
-    studenter stud;
-    godkanda god;
+    int soktal;
+    int plats;
+    int vekt [10]={12,22,32,43,56,68,79,81,98,100};
 
-    FILE *pstud,*pgod;
+    printf("ange soktal: ");
+    scanf("%i", &soktal);
 
-    pstud=fopen("STUDENTER.DAT", "rb");
-    if (pstud==NULL){
-        printf("kunde inte läsa filen");
-        return 1;
+    plats = sortera(vekt,soktal,10);
+    if(plats!=-1001){
+        printf("talet finns på plats %i",plats+1);
     }
-    pgod=fopen("GODKANDA.DAT","wb");
-    if(pgod==NULL){
-        printf("kunde inte skapa filen");
-        fclose(pstud);
-        return 1;
-    }
-while (fread(&stud,sizeof(studenter),1,pstud)){
-    if (stud.workshops>=10){
-        strcpy (god.namn,stud.namn);
-        strcpy (god.personnummer,stud.personnummer);
-        strcpy (god.telefonnummer,stud.telefonnummer);
-        fwrite(&god,sizeof(godkanda),1,pgod);
-    }
-}
-fclose (pgod);
-fclose (pstud);
 
 return 0;
 }

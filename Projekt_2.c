@@ -1,57 +1,22 @@
 #include <stdio.h> 
 #include <stdlib.h>
-#include <string.h>
-#define MAX 42
-typedef struct postTyp{
-    char fornamn [10];
-    char efternamn [10];
-    char klubb [20];
-}postTyp;
-
+#include <time.h>
 int  main (){
-int antal =0;
-FILE *fp;
-postTyp post;
-fp = fopen("ANMAL.DAT","ab");
-if(fp==NULL){
-    printf("Misslyckat");
-    return 1;
-}
-  while (antal<MAX){
-    printf("\nRegistera deltagre %i\n", antal +1);
-    printf("Förnamn: ");
-    scanf("%s",post.fornamn);
+  int i,j;
+  int tal,summa=0;
 
-    printf("Efternamn: ");
-    scanf("%s",post.efternamn);
+  srand(time(NULL));
 
-    printf("Klubb: ");
-    scanf("%s", post.klubb);
-
-    fwrite(&post,sizeof(postTyp),1,fp);
-  antal++;
-
-  if (antal>=MAX)
-break;
-
-printf("Registera fler? (1=ja, 0=nej): ");
-int forts;
-scanf("%d",&forts);
-if(!forts)
-break;
-}
-fclose(fp);
-
-fp = fopen("ANMAL.DAT", "rb");
-if (fp == NULL){
-    printf("Misslyckat");
-    return 1;
-}
-fseek(fp,0,SEEK_END);
-antal = ftell(fp) / sizeof(postTyp);
-rewind (fp);
-
-printf("\nAntal anmälda deltagare är: %d\n", antal);
+  for(i=0;i<6;i++){
+    for(j=0;j<6;j++){
+    tal=rand()%90+10;
+    printf("%i ",tal);
+     summa +=tal;
+    }
+    
+    printf("= %i\n",summa);
+    summa=0;
+  }
 
 return 0;
 }
