@@ -1,39 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
-int sortera (int vekt[],int soktal,int storlek){
-    int v=0;
-    int mitt;
-    int h=storlek;
-    
-    
-    while((h-v)>1){
-        mitt=(v+h)/2;
-        
-        if (soktal>=vekt[mitt])
-          v=mitt;
-    
-        else 
-          h=mitt;
-       }
-    if(soktal==vekt[v])
-        return v;
-    
-    else
-    printf("talet finns inte");
-    return -1001;
+int sort(int vekt[], int storlek){
+    int i,j,slask;
+
+    for(i=0; i<storlek; i++){
+        for(j=storlek-1; j>i; j--){
+            if(vekt[j-1]>vekt[j]){
+                slask=vekt[j-1];
+                vekt[j-1]=vekt[j];
+                vekt[j]=slask;
+            }
+        }
     }
+    return 42;
+}
 int main(){
-    int soktal;
-    int plats;
-    int vekt [10]={12,22,32,43,56,68,79,81,98,100};
+ 
+int platser[5]={2,8,1,4,6};
+int antal;
+int i;
 
-    printf("ange soktal: ");
-    scanf("%i", &soktal);
+sort(platser,5);
+for(i=0; i<5; i++){
+    printf("%i ",platser[i]);
+}
 
-    plats = sortera(vekt,soktal,10);
-    if(plats!=-1001){
-        printf("talet finns på plats %i",plats+1);
-    }
+
 
 return 0;
 }
